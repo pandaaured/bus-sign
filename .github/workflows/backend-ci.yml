@@ -5,7 +5,7 @@ on:
       - 'backend/**'
   pull_request:
     paths:
-      - 'backend/**'                                                                                        
+      - 'backend/**'
 
 env:
   CARGO_TERM_COLOR: always
