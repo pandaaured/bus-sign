@@ -14,6 +14,9 @@ jobs:
   check:
     name: Check
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,11 +32,13 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: check
-          args: --manifest-path backend/Cargo.toml
 
   test:
     name: Test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -49,11 +54,13 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path backend/Cargo.toml
 
   format-and-lint:
     name: Format and Lint
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -70,10 +77,10 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --manifest-path backend/Cargo.toml --all -- --check
+          args: --all -- --check
       
       - name: Run cargo clippy
         uses: actions-rs/clippy-check@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          args: --all-features --manifest-path backend/Cargo.toml
+          args: --all-features
