@@ -11,17 +11,13 @@
   inputs = {
     nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
     devenv.url = "github:cachix/devenv";
-    nix2container = {
-      url = "github:nlewo/nix2container";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     bun2nix = {
       url = "github:nix-community/bun2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, devenv, nix2container, bun2nix, ... }:
+  outputs = { self, nixpkgs, devenv, bun2nix, ... }:
     let
       supportedSystems = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
@@ -37,11 +33,10 @@
         }
         // (nixpkgs.lib.optionalAttrs (system == "x86_64-linux") (
           let
-            nix2containerPkgs = nix2container.packages.${system};
             b2n = bun2nix.packages.${system}.default;
 
-            busSignApp = b2n.mkDerivation {
-              pname = "bus-sign-app";
+            busSignFrontend = b2n.mkDerivation {
+              pname = "bus-sign-frontend";
               version = (builtins.fromJSON (builtins.readFile ./frontend/package.json)).version;
               src = ./frontend;
 
@@ -59,10 +54,14 @@
               '';
             };
 
+            cargoNix = pkgs.callPackage ./backend/Cargo.nix { };
+
+            busSignBackend = cargoNix.rootCrate.build;
+
           in
           {
-            inherit busSignApp;
-            default = busSignApp;
+            inherit busSignFrontend busSignBackend;
+            default = busSignBackend;
           }
         ))
       );
