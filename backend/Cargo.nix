@@ -444,8 +444,8 @@ rec {
             packageId = "chrono";
           }
           {
-            name = "dotenv";
-            packageId = "dotenv";
+            name = "dotenvy";
+            packageId = "dotenvy";
           }
           {
             name = "reqwest";
@@ -750,12 +750,12 @@ rec {
           "default" = [ "std" ];
         };
       };
-      "dotenv" = rec {
-        crateName = "dotenv";
-        version = "0.15.0";
+      "dotenvy" = rec {
+        crateName = "dotenvy";
+        version = "0.15.7";
         edition = "2018";
         crateBin = [ ];
-        sha256 = "13ysjx7n2bqxxqydvnnbdwgik7i8n6h5c1qhr9g11x6cxnnhpjbp";
+        sha256 = "16s3n973n5aqym02692i1npb079n5mb0fwql42ikmwn8wnrrbbqs";
         authors = [
           "Noemi Lapresta <noemi.lapresta@gmail.com>"
           "Craig Hills <chills@gmail.com>"
@@ -764,6 +764,7 @@ rec {
           "Sean Griffin <sean@seantheprogrammer.com>"
           "Adam Sharp <adam@sharplet.me>"
           "Arpad Borsos <arpad.borsos@googlemail.com>"
+          "Allan Zhang <al@ayz.ai>"
         ];
         features = {
           "clap" = [ "dep:clap" ];

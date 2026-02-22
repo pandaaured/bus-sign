@@ -23,12 +23,7 @@
     ];
   };
 
-  env = {
-    PRT_API_KEY = "";
-    API_HOST = "127.0.0.1";
-    API_PORT = "8080";
-    VITE_API_BASE = "http://localhost:8080";
-  };
+  dotenv.enable = true;
 
   treefmt = {
     enable = true;

@@ -11,7 +11,6 @@ use axum::{
     routing::get,
 };
 use chrono::{DateTime, Duration, NaiveDateTime, Utc};
-use dotenv::dotenv;
 use serde::{Deserialize, Serialize};
 use std::net::{IpAddr, SocketAddr};
 use std::{collections::HashMap, env, sync::Arc};
@@ -111,7 +110,7 @@ type FrontendResponse = HashMap<String, Vec<RouteGroup>>;
 #[tokio::main]
 async fn main() {
     // load API key from .env in parent directory
-    dotenv().ok();
+    dotenvy::dotenv().ok();
 
     let api_key = env::var("PRT_API_KEY").expect("PRT_API_KEY must be set in .env");
 
