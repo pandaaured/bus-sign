@@ -15,14 +15,14 @@
         "61C": "#2ecc71",
         "61D": "#f39c12",
         "67": "#9b59b6",
-        "69": "#9b59b6",
+        "69": "#b359b6",
         "58": "#1abc9c",
     };
 
-    const capacityInfo: Record<string, { label: string; color: string }> = {
-        EMPTY: { label: "Empty", color: "#2ecc71" },
-        HALF_EMPTY: { label: "Some seats", color: "#f1c40f" },
-        FULL: { label: "Full", color: "#e74c3c" },
+    const capacityInfo: Record<string, { label: string; color: string; level: number }> = {
+        EMPTY: { label: "Empty", color: "#2ecc71", level: 1 },
+        HALF_EMPTY: { label: "Some seats", color: "#f18f0f", level: 2 },
+        FULL: { label: "Full", color: "#e74c3c", level: 3 },
     };
 
     const formatTime = (seconds: number): string => {
@@ -50,9 +50,6 @@
             {route}
         </div>
         <div>
-            {#if capacity}
-                <div class="capacity">({capacity.label})</div>
-            {/if}
             To {destination.toUpperCase()}
         </div>
     </div>
@@ -67,6 +64,20 @@
         {#if upcomingTimes.length > 0}
             <div>
                 Next bus in {upcomingTimes} min
+            </div>
+        {/if}
+        {#if capacity}
+            <div
+                    class="capacity-bar-container"
+                    style="background-color: {capacity.color}40;"
+            >
+                <div
+                        class="capacity-bar-fill"
+                        style="width: {capacity.level === 3 ? '100%' : (capacity.level === 2 ? '45%' : '15%')}; background-color: {capacity.color}"
+                ></div>
+                <div class="capacity-text" style= "color: black">
+                    {capacity.label}
+                </div>
             </div>
         {/if}
     </div>
@@ -96,8 +107,40 @@
         animation: pulse 1.5s ease-in-out infinite;
     }
 
-    .capacity {
-        font-weight: normal;
-        margin-bottom: 0.5rem;
+    /*capacity bars*/
+    .capacity-bar-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        position: relative;
+        width: 140px;
+        height: 24px;
+        background-color: #eee;
+        border-radius: 4px;
+        margin-top: 8px;
+        overflow: hidden;
+    }
+
+    .capacity-bar-fill {
+        height: 100%;
+        transition: width 0.3s ease;
+    }
+
+    .capacity-text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+        z-index: 10;
+        color: #333;
+        text-shadow: 0 0 4px rgba(255,255,255,0.9);
     }
 </style>
