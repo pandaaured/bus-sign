@@ -76,7 +76,7 @@
 
 <main>
     <div class="header">
-        <img src="../public/scotty.svg" alt="Scotty Logo" class="header-logo" />
+        <img src="/scotty.svg" alt="Scotty Logo" class="header-logo" />
         Live PRT Bus Arrivals (Forbes and Morewood)
     </div>
     <div
