@@ -76,6 +76,7 @@
 
 <main>
     <div class="header">
+        <img src="/scotty.svg" alt="Scotty Logo" class="header-logo" />
         Live PRT Bus Arrivals (Forbes and Morewood)
     </div>
     <div
@@ -83,7 +84,7 @@
         style="justify-content: start; align-items: flex-start"
     >
         <div class="stack left">
-            <div style="font-size: 40px">UC Side (Stop 7117)</div>
+            <div class="stop-header">UC Side <span class="arrow">&rarr;</span> <span class="stop-id">(Stop 7117)</span></div>
             {#each entriesUC as entry (entry.route + entry.destination)}
                 <BusTimeEntry {...entry} {paddingX} {paddingY} />
             {:else}
@@ -97,7 +98,7 @@
             {/each}
         </div>
         <div class="stack left">
-            <div style="font-size: 40px">Tepper Side (Stop 4407)</div>
+            <div class="stop-header">Tepper Side <span class="arrow">&larr;</span> <span class="stop-id">(Stop 4407)</span></div>
             {#each entriesTep as entry (entry.route + entry.destination)}
                 <BusTimeEntry {...entry} {paddingX} {paddingY} />
             {:else}
@@ -134,6 +135,28 @@
         gap: 0.75rem;
     }
 
+    .stop-header {
+        font-size: 40px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .stop-id {
+        font-size: 30px;
+        font-weight: normal;
+        color: #666;
+    }
+
+    .arrow {
+        font-size: 60px;
+        font-weight: 900;
+        color: rgba(178, 18, 196, 0.8);
+        line-height: 1;
+        transform: translateY(-4px);
+    }
+
     .attribution {
         font-weight: bold;
         font-size: 40px;
@@ -159,6 +182,13 @@
         justify-content: center;
         align-items: center;
         font-size: 80px;
+        gap: 30px;
+    }
+
+    .header-logo {
+        width: auto;
+        height: 80px;
+        flex-shrink: 0;
     }
 
     .footer {
