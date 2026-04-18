@@ -44,7 +44,7 @@
         : null;
 </script>
 
-<div class="rounded-box container" style="padding: {paddingY}px {paddingX}px">
+<div class="bus-entry container" style="padding: {paddingY}px {paddingX}px">
     <div class="stack left">
         <div class="route" style="color: {badgeColor}">
             {route}
@@ -53,19 +53,7 @@
             To {destination.toUpperCase()}
         </div>
     </div>
-    <div class="stack right">
-        <div class="time" class:approaching={isApproaching}>
-            {#if timeDisplay === "Approaching"}
-                {timeDisplay}
-            {:else}
-                {timeDisplay} MIN
-            {/if}
-        </div>
-        {#if upcomingTimes.length > 0}
-            <div>
-                Next bus in {upcomingTimes} min
-            </div>
-        {/if}
+    <div class="right-cluster">
         {#if capacity}
             <div
                     class="capacity-bar-container"
@@ -80,18 +68,34 @@
                 </div>
             </div>
         {/if}
+        <div class="stack right time-section">
+            <div class="time" class:approaching={isApproaching}>
+                {#if timeDisplay === "Approaching"}
+                    {timeDisplay}
+                {:else}
+                    {timeDisplay} MIN
+                {/if}
+            </div>
+            {#if upcomingTimes.length > 0}
+                <div>
+                    Next bus in {upcomingTimes} min
+                </div>
+            {/if}
+        </div>
     </div>
 </div>
 
 <style>
-    .rounded-box {
-        border-radius: 12px;
-        background-color: #f5f5f5;
-        border: 1px solid #e0e0e0;
+    .bus-entry {
+        background-color: transparent;
+        border-bottom: 2px solid #e0e0e0;
         min-width: 100%;
         min-height: 80px;
         box-sizing: border-box;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .bus-entry:last-child {
+        border-bottom: none;
     }
 
     .route {
@@ -107,6 +111,19 @@
         animation: pulse 1.5s ease-in-out infinite;
     }
 
+    .right-cluster {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+    }
+
+    .time-section {
+        width: 200px;
+        align-items: flex-end;
+        text-align: right;
+        flex-shrink: 0;
+    }
+
     /*capacity bars*/
     .capacity-bar-container {
         display: flex;
@@ -118,7 +135,6 @@
         height: 24px;
         background-color: #eee;
         border-radius: 4px;
-        margin-top: 8px;
         overflow: hidden;
     }
 
